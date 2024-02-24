@@ -1,5 +1,5 @@
-1) mvn clean install
-2) mvn spring:boot run
+1) ./mvnw clean install
+2) mvn spring-boot:run
 
 Приложение обычно доступно по адресу `http://localhost:8080`
 Но в случае чего смотрите на порт
