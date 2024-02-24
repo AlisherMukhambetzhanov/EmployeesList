@@ -91,4 +91,30 @@ document.addEventListener('DOMContentLoaded', function() {
                 }, 5000);
             });
         });
+
+        const countryCitiesMap = {
+            USA: ["Нью-Йорк", "Лос-Анджелес", "Чикаго"],
+            Canada: ["Торонто", "Ванкувер", "Монреаль"],
+            Germany: ["Берлин", "Мюнхен", "Гамбург"],
+            France: ["Париж", "Марсель", "Лион"],
+            UK: ["Лондон", "Манчестер", "Бирмингем"],
+            Russia: ["Москва", "Санкт-Петербург", "Новосибирск"]
+        };
+
+        document.getElementById('country').addEventListener('change', function() {
+            const selectedCountry = this.value;
+            const citySelect = document.getElementById('city');
+
+            // Очистка предыдущих городов
+            citySelect.innerHTML = '<option value="">Выберите город</option>';
+
+            // Добавление городов для выбранной страны
+            if(selectedCountry && countryCitiesMap[selectedCountry]) {
+                countryCitiesMap[selectedCountry].forEach(city => {
+                    const option = new Option(city, city);
+                    citySelect.add(option);
+                });
+            }
+        });
+
 });

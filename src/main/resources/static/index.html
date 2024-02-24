@@ -21,8 +21,20 @@
             <input type="text" id="patronymic" name="patronymic" placeholder="Отчество ( не обязательное поле )">
             <input type="text" id="phoneNumber" name="phoneNumber" placeholder="Пример: +12345678901"  title="Номер телефона должен быть от 10 до 13 цифр и может начинаться с +" required>
             <input type="email" id="email" name="email" placeholder="Email" required>
-            <input type="text" id="country" name="country" placeholder="Страна" required>
-            <input type="text" id="city" name="city" placeholder="Город" required>
+            <select id="country" name="country" required>
+                <option value="">Выберите страну</option>
+                <option value="USA">США</option>
+                <option value="Canada">Канада</option>
+                <option value="Germany">Германия</option>
+                <option value="France">Франция</option>
+                <option value="UK">Великобритания</option>
+                <option value="Russia">Россия</option>
+            </select>
+
+            <select id="city" name="city" required>
+                <option value="">Сначала выберите страну</option>
+            </select>
+
             <button type="submit">Добавить сотрудника</button>
         </form>
     </div>
