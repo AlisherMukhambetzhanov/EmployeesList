@@ -26,8 +26,10 @@ function fetchEmployees() {
         .catch(error => console.error('Ошибка при получении данных о сотрудниках:', error));
 }
 
-
 document.addEventListener('DOMContentLoaded', function() {
     fetchEmployees();
-});
 
+    document.getElementById("loadEmployeesBtn").addEventListener("click", function() {
+            fetchEmployees();
+        });
+});
