@@ -11,6 +11,22 @@
 </header>
 <main>
     <button id="loadEmployeesBtn">Показать сотрудников</button>
+
+    <div id="employeeForm">
+        <div id="errorMessage" style="color: red; display: none">sadsad</div>
+        <h2>Добавить нового сотрудника</h2>
+        <form id="newEmployeeForm">
+            <input type="text" id="firstName" name="firstName" placeholder="Имя" required>
+            <input type="text" id="lastName" name="lastName" placeholder="Фамилия" required>
+            <input type="text" id="patronymic" name="patronymic" placeholder="Отчество ( не обязательное поле )">
+            <input type="text" id="phoneNumber" name="phoneNumber" placeholder="Пример: +12345678901"  title="Номер телефона должен быть от 10 до 13 цифр и может начинаться с +" required>
+            <input type="email" id="email" name="email" placeholder="Email" required>
+            <input type="text" id="country" name="country" placeholder="Страна" required>
+            <input type="text" id="city" name="city" placeholder="Город" required>
+            <button type="submit">Добавить сотрудника</button>
+        </form>
+    </div>
+
     <div id="employeeList" class="employee-list"></div>
 </main>
 <footer>

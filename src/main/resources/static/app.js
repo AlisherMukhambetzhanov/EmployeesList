@@ -45,4 +45,50 @@ document.addEventListener('DOMContentLoaded', function() {
     document.getElementById("loadEmployeesBtn").addEventListener("click", function() {
             fetchEmployees();
         });
+
+    document.getElementById("newEmployeeForm").addEventListener("submit", function(e) {
+            e.preventDefault(); // Предотвратить стандартную отправку формы
+
+            const formData = {
+                firstName: document.getElementById("firstName").value,
+                lastName: document.getElementById("lastName").value,
+                patronymic: document.getElementById("patronymic").value,
+                phoneNumber: document.getElementById("phoneNumber").value,
+                email: document.getElementById("email").value,
+                country: document.getElementById("country").value,
+                city: document.getElementById("city").value
+            };
+
+            fetch('/api/employees', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(formData)
+            })
+            .then(response => {
+                if (!response.ok) {
+                    // Если HTTP-статус в диапазоне 4xx или 5xx, преобразуем ответ в JSON и возвращаем промис, который будет отклонен
+                    return response.json().then(errorData => Promise.reject(errorData));
+                }
+                return response.json(); // В случае успеха преобразуем ответ в JSON
+            })
+            .then(data => {
+                console.log('Success:', data);
+                fetchEmployees(); //
+            })
+            .catch((error) => {
+                console.error('Error:', error);
+                const errorMessage = document.getElementById('errorMessage');
+                const errorMessages = Object.values(error);
+                const firstErrorMessage = errorMessages.length > 0 ? errorMessages[0] : "Произошла ошибка. Пожалуйста, проверьте введенные данные.";
+
+                errorMessage.innerHTML = firstErrorMessage
+                errorMessage.style.display = 'block';
+
+                setTimeout(() => {
+                        errorMessage.style.display = 'none';
+                }, 5000);
+            });
+        });
 });
