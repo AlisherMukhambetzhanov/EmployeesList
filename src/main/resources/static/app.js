@@ -1,6 +1,6 @@
 function displayEmployees(employees) {
     const employeeList = document.getElementById('employeeList');
-    employeeList.innerHTML = ''; // Очистка списка сотрудников перед добавлением новых
+    employeeList.innerHTML = '';
 
     employees.forEach(employee => {
         const employeeItem = document.createElement('div');
@@ -12,6 +12,7 @@ function displayEmployees(employees) {
             <p>Email: ${employee.email}</p>
             <p>Страна: ${employee.country}</p>
             <p>Город: ${employee.city}</p>
+            <button onclick="deleteEmployee(${employee.id})" class="delete-btn">Удалить</button>
         `;
         employeeList.appendChild(employeeItem);
     });
@@ -24,6 +25,18 @@ function fetchEmployees() {
             displayEmployees(data);
         })
         .catch(error => console.error('Ошибка при получении данных о сотрудниках:', error));
+}
+
+function deleteEmployee(employeeId) {
+    fetch(`/api/employees/${employeeId}`, {
+        method: 'DELETE'
+    })
+    .then(response => {
+        if(response.ok) {
+            fetchEmployees();
+        }
+    })
+    .catch(error => console.error('Ошибка при удалении сотрудника:', error));
 }
 
 document.addEventListener('DOMContentLoaded', function() {
