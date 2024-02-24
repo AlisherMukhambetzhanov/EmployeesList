@@ -51,5 +51,33 @@ public class EmployeeService {
                 .orElseThrow(() -> new RuntimeException("Employee not found with id " + id));
         employeeRepository.delete(employee);
     }
+
+    public List<Employee> searchByLastName(String lastName) {
+        return employeeRepository.findByLastNameContainingIgnoreCase(lastName);
+    }
+
+    public List<Employee> searchByFirstName(String firstName) {
+        return employeeRepository.findByFirstNameContainingIgnoreCase(firstName);
+    }
+
+    public List<Employee> searchByPatronymic(String patronymic) {
+        return employeeRepository.findByPatronymicContainingIgnoreCase(patronymic);
+    }
+
+    public List<Employee> searchByPhoneNumber(String phoneNumber) {
+        return employeeRepository.findByPhoneNumberContaining(phoneNumber);
+    }
+
+    public List<Employee> searchByEmail(String mail) {
+        return employeeRepository.findByEmailContainingIgnoreCase(mail);
+    }
+
+    public List<Employee> searchByCountry(String country) {
+        return employeeRepository.findByCountryContainingIgnoreCase(country);
+    }
+
+    public List<Employee> searchByCity(String city) {
+        return employeeRepository.findByCityContainingIgnoreCase(city);
+    }
 }
 
