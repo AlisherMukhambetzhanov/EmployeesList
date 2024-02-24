@@ -13,7 +13,7 @@
     <button id="loadEmployeesBtn">Показать сотрудников</button>
 
     <div id="employeeForm">
-        <div id="errorMessage" style="color: red; display: none">sadsad</div>
+        <div id="errorMessage" style="color: red; display: none"></div>
         <h2>Добавить нового сотрудника</h2>
         <form id="newEmployeeForm">
             <input type="text" id="firstName" name="firstName" placeholder="Имя" required>
@@ -38,6 +38,19 @@
             <button type="submit">Добавить сотрудника</button>
         </form>
     </div>
+
+    <div id="searchForm">
+        <h2>Поиск сотрудника</h2>
+        <input type="text" id="searchFirstName" placeholder="Имя">
+        <input type="text" id="searchLastName" placeholder="Фамилия">
+        <input type="text" id="searchPatronymic" placeholder="Отчество">
+        <input type="text" id="searchPhoneNumber" placeholder="Номер телефона">
+        <input type="text" id="searchEmail" placeholder="Email">
+        <input type="text" id="searchCountry" placeholder="Страна">
+        <input type="text" id="searchCity" placeholder="Город">
+        <button id="searchBtn">Поиск</button>
+    </div>
+
 
     <div id="employeeList" class="employee-list"></div>
 </main>

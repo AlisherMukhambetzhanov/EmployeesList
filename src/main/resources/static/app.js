@@ -117,4 +117,29 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         });
 
+        document.getElementById('searchBtn').addEventListener('click', function() {
+            const searchParams = {
+                firstName: document.getElementById('searchFirstName').value,
+                lastName: document.getElementById('searchLastName').value,
+                patronymic: document.getElementById('searchPatronymic').value,
+                phoneNumber: document.getElementById('searchPhoneNumber').value,
+                email: document.getElementById('searchEmail').value,
+                country: document.getElementById('searchCountry').value,
+                city: document.getElementById('searchCity').value
+            };
+
+            // Формирование строки запроса
+            const queryString = Object.entries(searchParams)
+                .filter(([_, value]) => value.trim() !== '')
+                .map(([key, value]) => `${encodeURIComponent(key)}=${encodeURIComponent(value)}`)
+                .join('&');
+
+            fetch(`/api/employees/search?${queryString}`)
+                .then(response => response.json())
+                .then(data => {
+                    displayEmployees(data)
+                })
+                .catch(error => console.error('Ошибка при выполнении поиска:', error));
+        });
+
 });

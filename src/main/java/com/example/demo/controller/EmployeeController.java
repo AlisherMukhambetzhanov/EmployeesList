@@ -2,30 +2,32 @@ package com.example.demo.controller;
 
 
 import com.example.demo.model.Employee;
+import com.example.demo.repository.EmployeeRepository;
+import com.example.demo.repository.EmployeeSpecification;
 import com.example.demo.service.EmployeeService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @RestController
 @RequestMapping("/api/employees")
 public class EmployeeController {
 
     private final EmployeeService employeeService;
+    private final EmployeeRepository employeeRepository;
 
     @Autowired
-    public EmployeeController(EmployeeService employeeService) {
+    public EmployeeController(EmployeeService employeeService, EmployeeRepository employeeRepository) {
         this.employeeService = employeeService;
+        this.employeeRepository = employeeRepository;
     }
 
     // Получение списка всех сотрудников
@@ -74,36 +76,10 @@ public class EmployeeController {
     }
 
     @GetMapping("/search")
-    public ResponseEntity<List<Employee>> searchEmployees(
-            @RequestParam(value = "lastName", required = false) String lastName,
-            @RequestParam(value = "firstName", required = false) String firstName,
-            @RequestParam(value = "patronymic", required = false) String patronymic,
-            @RequestParam(value = "phoneNumber", required = false) String phoneNumber,
-            @RequestParam(value = "email", required = false) String email,
-            @RequestParam(value = "country", required = false) String country,
-            @RequestParam(value = "city", required = false) String city
-    ) {
-        List<Employee> employees;
-
-        if (lastName != null) {
-            employees = employeeService.searchByLastName(lastName);
-        } else if (firstName != null) {
-            employees = employeeService.searchByFirstName(firstName);
-        } else if (patronymic != null) {
-            employees = employeeService.searchByPatronymic(patronymic);
-        } else if (phoneNumber != null) {
-            employees = employeeService.searchByPhoneNumber(phoneNumber);
-        } else if (email != null) {
-            employees = employeeService.searchByEmail(email);
-        } else if (country != null) {
-            employees = employeeService.searchByCountry(country);
-        } else if (city != null) {
-            employees = employeeService.searchByCity(city);
-        } else {
-            employees = new ArrayList<>();
-        }
-
-        return ResponseEntity.ok().body(employees);
+    public ResponseEntity<List<Employee>> searchEmployees(@RequestParam Map<String, String> searchParams) {
+        Specification<Employee> spec = EmployeeSpecification.getEmployeesByCriteria(searchParams);
+        List<Employee> employees = employeeRepository.findAll(spec);
+        return ResponseEntity.ok(employees);
     }
 
     @ControllerAdvice
